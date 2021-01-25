@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \URL::forceScheme('https');
         View::composer('*', function ($view) {
             $view->with('globalLocations', Location::all());
             $view->with('globalEventTypes', EventType::all());
