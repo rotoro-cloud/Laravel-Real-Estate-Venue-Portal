@@ -13,9 +13,9 @@
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
-         "fzaninotto/faker": "^1.4",
         "yajra/laravel-datatables-oracle": "^9.6",
         "spatie/laravel-medialibrary": "^7.12",
+        "fzaninotto/faker": "^1.4",
         "laravel/passport": "^7.4"
     },
     "require-dev": {
