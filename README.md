@@ -52,6 +52,26 @@
 В курсе будет демонстрация решения, если ты вдруг застрял.
 Для проверки используй ссылку в терминале `Estate App`.
 
+Я предлагаю начать с такой конструкции плейбука
+
+```
+- name: Deploy the Application
+  hosts: web
+  become: yes
+  vars:
+    app_dir: /usr/share/nginx/html/
+    git_repo: https://github.com/rotoro-cloud/Laravel-Real-Estate-Venue-Portal.git
+    db_name: appDb
+    mysql_user_name: username
+    mysql_user_password: Password
+    service_user: nginx
+    service_group: nginx
+    php_repo: remi-php74
+  roles:
+    - role: mysql-role
+    - role: nginx-php-fpm-role
+    - role: estate-app-role
+```
 
 # Laravel 6 Real Estate / Venues Management with Adminpanel
 
