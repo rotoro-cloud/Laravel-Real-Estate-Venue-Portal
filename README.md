@@ -1,3 +1,57 @@
+# Тестовое приложение для разворачивания с помощью Ansible
+
+В рамках финального задания для новичков я предлагаю "испачкать руки" и развернуть приложение с большим количеством зависимостей на нашем тестовом стенде.
+
+Нужно создать playbook, который выполнит развертывание приложения на узле `web`. Inventory будет предоставлен. Тестовый стенд на базе CentOS 7.
+
+1. Используем роли rotoro_cloud.mysql_role и rotoro_cloud.nginx-php-fpm-role для настройки окружения.
+    - нужно переопределить переменные `mysql_user_pass`
+
+2. Создаем свою роль, которая выполнит нужные команды в размещении, определенном в переменной `app_dir`
+    - склонировать https://github.com/rotoro-cloud/Laravel-Real-Estate-Venue-Portal.git в нужный каталог
+    - создать .env из .env.example
+    - поменять в нем параметры `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` на заданные ранее на уровне playbook
+    - с помощью пакетного менеджера OC установить `composer`
+    - подтянуть зависимости проекта с помощью 
+    
+      ```
+      sudo composer install
+      ```
+      
+    - выполнить создание ключа приложения 
+    
+      ```
+      sudo php artisan key:generate;
+      ```
+      
+    - наполнить базу тестовой информацией
+    
+      ```
+      sudo php artisan migrate --seed;
+      ```
+      
+    - создать символические ссылки для хранилища 
+    
+      ```
+      sudo rm -rf public/storage; sudo php artisan storage:link;
+      ```
+      
+    - дать доступ нужным директориям
+    
+      ```
+      sudo chown -R nginx.nginx /usr/share/nginx/html/;
+      ```
+      ```
+      sudo chmod -R ug+rwx /usr/share/nginx/html/storage /usr/share/nginx/html/bootstrap/cache;
+      ```
+      ```
+      sudo chmod -R o+rwx /usr/share/nginx/html/storage/logs;)
+      ```
+
+В курсе будет демонстрация решения, если ты вдруг застрял.
+Для проверки используй ссылку в терминале `Estate App`.
+
+
 # Laravel 6 Real Estate / Venues Management with Adminpanel
 
 Transformed [Bootstrap theme Homespace](https://colorlib.com/wp/template/homespace/) into a mini-clone of [Hirespace.com](https://hirespace.com) portal, fully manageable with adminpanel generated with [QuickAdminPanel](https://quickadminpanel.com), 
